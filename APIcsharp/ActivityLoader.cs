@@ -39,7 +39,7 @@ namespace APIcsharp.Class
             {
                 try
                 {
-                    string Url = $"{_baseUrl}{activityType}";
+                    string Url = $"{_baseUrl}type={activityType}&participants={participants}";
                     HttpResponseMessage message = await client.GetAsync(Url);
                     message.EnsureSuccessStatusCode();
                     string content = await message.Content.ReadAsStringAsync();
@@ -66,8 +66,17 @@ namespace APIcsharp.Class
 
         public void DisplayData()
         {
-            Console.WriteLine($"You should {Activity.ToLower()}");
+            try
+            {
 
+                Console.WriteLine($"You should {Activity.ToLower()}");
+
+                Console.WriteLine($"Tags:\n     Type: {Type.ToUpper()} \n     Participants: {Participants.ToLower()} \n \n");
+            }
+            catch (System.NullReferenceException e)
+            {
+                Console.WriteLine($"Unfortunately there are no activities with these parameters. Please reenter");
+            }
         }
 
 
